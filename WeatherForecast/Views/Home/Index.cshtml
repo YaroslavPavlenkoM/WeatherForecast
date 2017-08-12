@@ -1,0 +1,184 @@
+﻿@model WeatherForecast.Models.SupportModel.ForecastDataModel
+@{
+    ViewBag.Title = "WeatherForecastCity";
+}
+<html>
+<head>
+    <title>Test Application </title>
+    <script src="~/Scripts/alertify.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/MyContent/Style.css" rel="stylesheet" />
+    <link href="~/Content/alertify.min.css" rel="stylesheet" />
+    <script src="~/Scripts/alertify.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/MyScripts/Action.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        @if (ViewData["TextError"] != null)
+        {
+            <Text>alertify.error('@ViewData["TextError"]');</Text>
+        }  
+    </script>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <img src="~/images/Status-weather-clear-icon.png" />
+                <span class="titleText">Weather Forecast</span>
+
+            </div>
+            <form action="/Home/GetCurrentWeather" method="get">
+                <div class="col-md-3" style="padding-top: 26px; padding-left: 3px;">
+                    <input type="text" name="nameOfCity" style="width: 288px;" class="formCityName form-control" placeholder="Name of city">
+                </div>
+                <div class="col-md-1" style="padding-top: 26px; padding-left: 3px;">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span> Search
+                    </button>
+                </div>               
+            </form>
+        </div>
+
+        <div class="row top_line"></div>
+
+        @if (Model != null)
+        { 
+        <div class="row titleCurrentCity">
+            Weather in <span>@ViewData["CityName"]</span>
+        </div>
+
+        <div class="row currentWeather">
+            <h1>Current weather in @ViewData["CityName"]</h1>
+            <div class="col-md-3">
+                <img src=@Model.CurrentWeather.UrlIcon width="100" height="100" alt="lorem">
+                <span style="font-size: 18px; font-weight: bold;">@Model.CurrentWeather.Temperature &deg;С</span> <br>
+                <span style="font-size: 18px;">@Model.CurrentWeather.StateWeather</span> <br>
+                <span style="font-size: 12px">Sunset:@Model.CurrentWeather.Sunrise  |  Sunrise:@Model.CurrentWeather.Sunset</span>
+            </div>
+
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>temperature, &deg;С</th>
+                            <th>humidity, %</th>
+                            <th>pressure, hPa</th>
+                            <th>speed wind, meter/sec</th>
+                            <th>visibility, meter</th>
+                            <th>сloudiness, %</th>
+                            <th>precipitation, mm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.CurrentWeather.Temperature</td>
+                            <td>@Model.CurrentWeather.Humidity</td>
+                            <td>@Model.CurrentWeather.Pressure</td>
+                            <td>@Model.CurrentWeather.SpeedWind</td>
+                            <td>@Model.CurrentWeather.Visibility</td>
+                            <td>@Model.CurrentWeather.Cloudiness</td>
+                            <td>@Model.CurrentWeather.Precipitation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="row weatherForecast">
+            <h1>Weather forecast on 5 days</h1>
+
+            <div class="col-md-12">
+                <div class="panel with-nav-tabs panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs listDays">
+                            @for (int i = 0; i < Model.Forecast.Count; i++)
+                            {
+                                string url = "#tabdefault" + i;
+                                <li>
+                                    <a href=@url data-toggle="tab">
+                                        @Model.Forecast[i].Date.DayOfWeek <br>
+                                        <span>@Model.Forecast[i].Date.Day</span> <br>
+                                        @Model.Forecast[i].ToMonthName()
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            @for (int i = 0; i < Model.Forecast.Count; i++)
+                            {
+                                string url = "tabdefault" + i;
+                                <div class="tab-pane fade" id=@url>
+                                    <table class="table table-bordered tableForecast">
+                                        <tr class="headerTimeForecast">
+                                            <th rowspan="2"></th>
+                                        @foreach (var element in Model.Forecast[i].WeatherDyringDay)
+                                        {
+                                            <th>@element.StartTime.Substring(11)-@element.EndTime.Substring(11)</th>
+                                        }
+                                        </tr>
+
+                                        <tr>
+                                        @foreach (var element in Model.Forecast[i].WeatherDyringDay)
+                                        {
+                                            <td><img src=@element.UrlIcon width="50" height="50" alt="lorem"></td>
+                                        }
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">temperature</th>
+                                            @foreach (var element in Model.Forecast[i].WeatherDyringDay)
+                                            {
+                                                <td>@element.Temperature</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">humidity, %</th>
+                                            @foreach (var element in Model.Forecast[i].WeatherDyringDay)
+                                            {
+                                                <td>@element.Humidity</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">pressure, hPa</th>
+                                            @foreach (var element in Model.Forecast[i].WeatherDyringDay)
+                                            {
+                                                <td>@element.Pressure</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">speed wind, meter/sec</th>
+                                            @foreach (var element in Model.Forecast[i].WeatherDyringDay)
+                                            {
+                                                <td>@element.SpeedWind</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">сloudiness, %</th>
+                                            @foreach (var element in Model.Forecast[i].WeatherDyringDay)
+                                            {
+                                                <td>@element.Cloudiness</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">precipitation, mm</th>
+                                            @foreach (var element in Model.Forecast[i].WeatherDyringDay)
+                                            {
+                                                <td>@element.Precipitation</td>
+                                            }
+                                        </tr>                     
+                                    </table>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        }
+    </div>
+</body>
+</html>
+

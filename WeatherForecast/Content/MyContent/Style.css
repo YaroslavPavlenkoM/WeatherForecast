@@ -1,0 +1,82 @@
+.titleText {
+	color: #337ab7;
+	font-weight: bold;
+	font-size: 32px;
+}
+
+.searchCity {
+	padding-top: 26px;
+	padding-left: 3px;
+}
+
+.formCityName {
+	width: 60px;
+}
+
+.top_line {
+	height: 2px;
+	background-color: #e1e1e1;
+}
+
+.titleCurrentCity {
+	padding: 12px;
+	text-align:  center;
+	font-size: 26px;
+	color: 	#505050; 
+}
+
+.titleCurrentCity span {
+	color: #080808;
+}
+
+.currentWeather {
+	padding: 5px;
+}
+
+.currentWeather h1 {
+	font-size: 23px;
+}
+
+.weatherForecast {
+	padding: 5px;
+}
+
+.weatherForecast h1 {
+	font-size: 23px;
+}
+
+.tableForecast td {
+	text-align: center;
+	font-size: 14px;
+}
+
+.tableForecast th {
+	font-size: 14px;
+}
+
+.headerTimeForecast th {
+	text-align: center;
+}
+
+.listDays a {
+	color: black; 
+	text-align: center;
+	font-size: 16px;
+	border: 0px;
+}
+
+.listDays li {
+	border-right: 1px solid  #E8E8E8;
+}
+
+.listDays a span {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+
+
+.panel-heading {
+	padding: 0px;
+	border-bottom: 0px;
+}
